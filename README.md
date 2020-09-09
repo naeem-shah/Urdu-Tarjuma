@@ -1,4 +1,4 @@
-# tarjumaquran
+# Tarjuma Hafiz Abdulsalam bin Muhammad
 
 A new Flutter application.
 
