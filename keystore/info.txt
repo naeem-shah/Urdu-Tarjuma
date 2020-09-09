@@ -1,0 +1,3 @@
+storePassword: tarjuma123
+keyAlias: tarjuma
+keyPassword: tarjuma000
