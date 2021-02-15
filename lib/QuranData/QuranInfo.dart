@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:tarjumaquran/models/surah_info_model.dart';
+
 class QuranInfo {
   static final List<Info> surahInfo = [
     new Info(
@@ -613,10 +615,4 @@ class QuranInfo {
   ];
 }
 
-class Info {
-  int id;
-  String urduName;
-  String engName;
 
-  Info({this.id, this.urduName, this.engName});
-}

@@ -1,9 +1,10 @@
-import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tarjumaquran/helper/preferences.dart';
 
-import 'Constants/Constants.dart';
+import '../../Constants/Constants.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class _SettingsState extends State<Settings> {
   double currentArabicFont = 20.0;
   double currentTranslationFont = 18.0;
   bool isLastReadShow = true;
+  bool isDarkMode = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,9 +71,15 @@ class _SettingsState extends State<Settings> {
               child: Text('الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَِ', textAlign: TextAlign.center ,style: TextStyle(fontFamily: "NooreHuda", fontSize: currentArabicFont.toDouble()),),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.shade300))),
+
+          // divider
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              color: Colors.grey.shade300,
+              thickness: 1,
+              height: 36,
+            ),
           ),
 
           // tarjuma
@@ -112,12 +121,15 @@ class _SettingsState extends State<Settings> {
               child: Text('سب تعریف اللہ کے لیے ہے جو سارے جہانوں کا پالنے والا ہے۔', textAlign: TextAlign.center ,style: TextStyle(fontFamily: "Jameel", fontSize: currentTranslationFont.toDouble()),),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.shade300))),
+          // divider
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              color: Colors.grey.shade300,
+              thickness: 1,
+              height: 36,
+            ),
           ),
-
-          // last read
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Row(
@@ -136,7 +148,48 @@ class _SettingsState extends State<Settings> {
                     print(value);
                     preferences.setBool(Constants.LAST_READ, value);
                   },
-                  activeColor: Colors.blue,
+                )
+              ],
+            ),
+          ),
+
+          // divider
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              color: Colors.grey.shade300,
+              thickness: 1,
+              height: 36,
+            ),
+          ),
+          // theme
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Text("ڈارک موڈ تھیم", style: TextStyle(fontSize: 20, fontFamily: "Jameel"),),
+                ),
+                Switch(
+                  value: isDarkMode,
+                  onChanged: (bool isDark) async {
+                    print(isDark);
+                    if (isDark){
+                      Get.changeTheme(ThemeData.dark());
+                      isDarkMode = true;
+                      Preferences.setBool(key: Constants.isDark, value: true);
+                    } else {
+                      Get.changeTheme(ThemeData.light());
+                      isDarkMode = false;
+                      Preferences.setBool(key: Constants.isDark, value: false);
+                    }
+
+                    setState(() {
+
+                    });
+                  },
                 )
               ],
             ),
@@ -166,6 +219,7 @@ class _SettingsState extends State<Settings> {
       currentArabicFont = preferences.getDouble(Constants.ARABIC_FONT) ?? 24.0;
       currentTranslationFont = preferences.getDouble(Constants.TRANSLATION_FONT) ?? 18.0;
       isLastReadShow = preferences.getBool(Constants.LAST_READ) ?? true;
+      isDarkMode = Preferences.getbool(key: Constants.isDark) ?? false;
     });
   }
 

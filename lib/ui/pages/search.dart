@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:substring_highlight/substring_highlight.dart';
-import 'package:tarjumaquran/AyatDetail.dart';
+import 'package:tarjumaquran/ui/pages/surah_details.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
 import 'package:tarjumaquran/Models/AyatModel.dart';
 import 'package:tarjumaquran/QuranData/QuranInfo.dart';
 
-import 'Database/DatabaseManager.dart';
+import '../../Database/DatabaseManager.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -29,7 +29,6 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         title: Text('تلاش کریں',style: TextStyle(fontFamily: "Jameel"),),
         centerTitle: true,
@@ -53,7 +52,6 @@ class _SearchState extends State<Search> {
               },
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
                 hintText: 'یہاں لکھیں',
                 prefixIcon: Icon(Icons.search),
               ),
@@ -110,7 +108,7 @@ class _SearchState extends State<Search> {
         title: SubstringHighlight(
           text: ayatModel.translation,
           term: queryController.text.trim(),
-          textStyle: TextStyle(fontFamily: "Jameel", color: Colors.black, fontSize: 18, height: 1.7),
+          textStyle: TextStyle(fontFamily: "Jameel", fontSize: 18, height: 1.7),
           textStyleHighlight: TextStyle(fontFamily: "Jameel",
               color: Colors.red, fontSize: 18, height: 1.7, fontWeight: FontWeight.w600),
         ),
@@ -137,7 +135,7 @@ class _SearchState extends State<Search> {
     return Card(
       elevation: 4,
       child: ListTile(
-        title: Text(ayatModel.ayat, style: TextStyle(fontFamily: "NooreHuda", color: Colors.black, fontSize: 20,),),
+        title: Text(ayatModel.ayat, style: TextStyle(fontFamily: "NooreHuda", fontSize: 20,),),
         subtitle: Container(
             padding: const EdgeInsets.only(top: 8),
             decoration: BoxDecoration(

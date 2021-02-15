@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
-import 'package:tarjumaquran/AyatDetail.dart';
+import 'package:tarjumaquran/ui/pages/surah_details.dart';
 import 'package:tarjumaquran/QuranData/QuranInfo.dart';
 
-import 'Database/DatabaseManager.dart';
-import 'Models/AyatModel.dart';
-import 'Utilities/Utilities.dart';
+import '../../Database/DatabaseManager.dart';
+import '../../Models/AyatModel.dart';
+import '../../Utilities/utilities.dart';
 
 class Bookmarks extends StatefulWidget {
   @override
@@ -72,7 +72,6 @@ class _BookmarksState extends State<Bookmarks> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 width: MediaQuery.of(context).size.width,
-                color: Colors.grey.shade50,
                 child: Text(
                   ayatModel.translation,
                   style:

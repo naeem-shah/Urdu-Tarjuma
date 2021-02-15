@@ -27,6 +27,7 @@ class Constants{
 
 
   static const SET = "set";
+  static const isDark = "isDark";
 
 
   static const BOOKMARK = "بک مارک";

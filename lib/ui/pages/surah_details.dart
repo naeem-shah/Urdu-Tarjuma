@@ -1,6 +1,7 @@
 // List View of Ayat detail
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:screen/screen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share/share.dart';
@@ -8,9 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
 import 'package:tarjumaquran/Database/DatabaseManager.dart';
 import 'package:tarjumaquran/Models/AyatModel.dart';
-import 'package:tarjumaquran/Utilities/Utilities.dart';
+import 'package:tarjumaquran/Utilities/utilities.dart';
 
-import 'QuranData/QuranInfo.dart';
+import '../../QuranData/QuranInfo.dart';
 
 class SurahDetailList extends StatefulWidget {
   final int surahId;
@@ -50,49 +51,50 @@ class _SurahDetailListState extends State<SurahDetailList>{
       onWillPop: () async {
         return onBackPress();
       },
-      child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.grey.shade200,
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(title, style: TextStyle(fontFamily: "NooreHuda",),),
-              actions: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                        value: currentItem,
-                        isDense: true,
-                        hint: Text(
-                          "آیات", style: TextStyle(color: Colors.black),),
-                        icon: Icon(Icons.arrow_drop_down, color: Colors.white,),
-                        items: List.generate(aayatList.isNotEmpty ? aayatList.length-1 : aayatList.length, (int index) =>
-                            DropdownMenuItem(
-                              child: Text((index+1).toString(), style: TextStyle(
-                                  color: Colors.black),),
-                              value: index+1,
-                            )),
-                        onChanged: (int value) {
-                          jumpTo(value);
-                          setState(() {
-                            currentItem = value;
-                          });
-                        }
+      child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(title, style: TextStyle(fontFamily: "NooreHuda",),),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 70,
+                  child: DropdownButtonFormField(
+                    value: currentItem,
+                    style: TextStyle(color: Colors.white),
+                    icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                    onChanged: (int value) {
+                      jumpTo(value);
+                      setState(() {
+                        currentItem = value;
+                      });
+                    },
+                    items: List.generate(aayatList.isNotEmpty ? aayatList.length-1 : aayatList.length, (int index) =>
+                        DropdownMenuItem(
+                          child: Text("${index+1}"),
+                          value: index+1,
+                        )),
+                    decoration: InputDecoration(
+                        hintText: "آیت نمبر",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(fontFamily: "Jameel", color: Colors.white),
                     ),
+
                   ),
-                )
-              ],
-            ),
-            body: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-              child: aayatList.isNotEmpty ? ScrollablePositionedList.builder(
-                itemCount: aayatList.length,
-                itemBuilder: (BuildContext context, int index) => makeListView(context, index),
-                itemScrollController: itemScrollController,
-                itemPositionsListener: itemPositionListener,
-              ) : Center(child: CircularProgressIndicator(),),
-            ),
-        ),
+                ),
+              )
+            ],
+          ),
+          body: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+            child: aayatList.isNotEmpty ? ScrollablePositionedList.builder(
+              itemCount: aayatList.length,
+              itemBuilder: (BuildContext context, int index) => makeListView(context, index),
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionListener,
+            ) : Center(child: CircularProgressIndicator(),),
+          ),
       ),
     );
   }
@@ -173,7 +175,6 @@ class _SurahDetailListState extends State<SurahDetailList>{
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               width: MediaQuery.of(context).size.width,
-              color: Colors.grey.shade50,
               child: Text(
                 ayatModel.translation,
                 style:
