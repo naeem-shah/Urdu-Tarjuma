@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:substring_highlight/substring_highlight.dart';
+import 'package:tarjumaquran/models/AyatModel.dart';
 import 'package:tarjumaquran/ui/pages/surah_details.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
-import 'package:tarjumaquran/Models/AyatModel.dart';
 import 'package:tarjumaquran/QuranData/QuranInfo.dart';
 
 import '../../Database/DatabaseManager.dart';

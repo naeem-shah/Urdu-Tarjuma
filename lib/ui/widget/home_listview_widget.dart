@@ -28,29 +28,9 @@ class _HomeListViewState extends State<HomeListView> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        set == Constants.SURAH
-            ? Padding(
-          padding:
-          const EdgeInsets.only(bottom: 4, top: 8, left: 8, right: 8),
-          child: TextField(
-            autofocus: false,
-            controller: nameController,
-            style: TextStyle(fontFamily: "Jameel", fontSize: 18),
-            textInputAction: TextInputAction.search,
-            onChanged: (String text) {
-              filter(text);
-            },
-            decoration: InputDecoration(
-              filled: true,
-              hintText: 'سورت تلاش کریں',
-              prefixIcon: Icon(Icons.search),
-            ),
-          ),
-        )
-            : SizedBox(height: 4,),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.only(top: 8,bottom: 8),
             itemCount: infoList.length,
             itemBuilder: (BuildContext context, int index) =>
                 makeList(context, index),

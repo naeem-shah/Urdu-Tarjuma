@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
+import 'package:tarjumaquran/models/AyatModel.dart';
 import 'package:tarjumaquran/ui/pages/surah_details.dart';
 import 'package:tarjumaquran/QuranData/QuranInfo.dart';
 
 import '../../Database/DatabaseManager.dart';
-import '../../Models/AyatModel.dart';
 import '../../Utilities/utilities.dart';
 
 class Bookmarks extends StatefulWidget {

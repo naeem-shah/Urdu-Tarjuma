@@ -25,8 +25,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   SharedPreferences preferences;
 
-  DbManager dbManager;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -68,10 +66,34 @@ class _HomePageState extends State<HomePage> {
                 ),
                 actions: <Widget>[
                   IconButton(
+                      tooltip: "resume",
+                      icon: Icon(
+                        Icons.menu_book_outlined,
+                      ),
+                      onPressed: () {
+                        int scrollPosition = preferences.getInt(Constants.SCROLL_POSITION) ?? 0;
+                        int id = preferences.getInt(Constants.ID) ?? 1;
+                        String set = preferences.getString(Constants.SET)??Constants.SURAH;
+
+
+                        if (set == Constants.PARAH) {
+                          Get.to(()=>ParahDetailList(
+                            title: QuranInfo.juzInfo[id - 1].urduName,
+                            scroll: scrollPosition,
+                            juzId: id,
+                          ));
+                        } else {
+                          Get.to(()=> SurahDetailList(
+                            title: QuranInfo.surahInfo[id - 1].urduName,
+                            scroll: scrollPosition,
+                            surahId: id,
+                          ));
+                        }
+                      }),
+                  IconButton(
                       tooltip: "Search",
                       icon: Icon(
                         Icons.search,
-                        color: Colors.white,
                       ),
                       onPressed: () {
                         Route route = new MaterialPageRoute(
@@ -261,78 +283,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    dbManager = new DbManager();
-    dbManager.initializeDatabase();
-    _showDialog();
+    initPreferences();
   }
 
-  _showDialog() async {
+  Future<void> initPreferences() async {
     preferences = await SharedPreferences.getInstance();
 
-
-    bool isLastRead = preferences.getBool(Constants.LAST_READ) ?? true;
-    if (!isLastRead){
-      return;
-    }
-
-    bool isFirstTime = preferences.getBool(Constants.IS_FIRST) ?? true;
-    int scrollPosition = preferences.getInt(Constants.SCROLL_POSITION);
-    int id = preferences.getInt(Constants.ID) ?? 1;
-    String set = preferences.getString(Constants.SET);
-
-    if (scrollPosition == 0) {
-      scrollPosition = 1;
-    }
-    if (!isFirstTime) {
-      String surahName = QuranInfo.surahInfo[id - 1].urduName;
-      String parahName = "";
-
-      String message = 'سورہ ' + surahName + " آیت نمبر " + '$scrollPosition';
-
-      if (set == Constants.PARAH) {
-        parahName = QuranInfo.juzInfo[id - 1].urduName;
-        message = parahName;
-      }
-
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(
-            'آپ مطالعہ فرما رہے تھے',
-            style: TextStyle(fontFamily: "Jameel"),
-          ),
-          content: Text(
-            message,
-            style: TextStyle(fontFamily: "Jameel"),
-          ),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  if (set == Constants.PARAH) {
-                    Get.off(ParahDetailList(
-                      title: parahName,
-                      scroll: scrollPosition,
-                      juzId: id,
-                    ));
-                  } else {
-                    Get.off(SurahDetailList(
-                      title: surahName,
-                      scroll: scrollPosition,
-                      surahId: id,
-                    ));
-                  }
-                },
-                child:
-                Text("شروع کریں", style: TextStyle(fontFamily: "Jameel"))),
-            FlatButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child:
-                Text("ختم کریں", style: TextStyle(fontFamily: "Jameel"))),
-          ],
-        ),
-      );
-    }
   }
 }

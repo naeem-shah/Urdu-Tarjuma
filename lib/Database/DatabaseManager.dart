@@ -5,7 +5,8 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
-import 'package:tarjumaquran/Models/AyatModel.dart';
+
+import '../models/AyatModel.dart';
 
 class DbManager {
   static DbManager _databaseManger;

@@ -19,7 +19,6 @@ class _SettingsState extends State<Settings> {
 
   double currentArabicFont = 20.0;
   double currentTranslationFont = 18.0;
-  bool isLastReadShow = true;
   bool isDarkMode = false;
 
   @override
@@ -121,37 +120,6 @@ class _SettingsState extends State<Settings> {
               child: Text('سب تعریف اللہ کے لیے ہے جو سارے جہانوں کا پالنے والا ہے۔', textAlign: TextAlign.center ,style: TextStyle(fontFamily: "Jameel", fontSize: currentTranslationFont.toDouble()),),
             ),
           ),
-          // divider
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              color: Colors.grey.shade300,
-              thickness: 1,
-              height: 36,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Text("جہاں چھوڑا تھا وہاں سے دوبارہ شروع کرنا", style: TextStyle(fontSize: 20, fontFamily: "Jameel"),),
-                ),
-                Switch(
-                  value: isLastReadShow,
-                  onChanged: (bool value) async {
-                    setState(() {
-                      isLastReadShow = value;
-                    });
-                    print(value);
-                    preferences.setBool(Constants.LAST_READ, value);
-                  },
-                )
-              ],
-            ),
-          ),
 
           // divider
           Padding(
@@ -218,7 +186,6 @@ class _SettingsState extends State<Settings> {
     setState(() {
       currentArabicFont = preferences.getDouble(Constants.ARABIC_FONT) ?? 24.0;
       currentTranslationFont = preferences.getDouble(Constants.TRANSLATION_FONT) ?? 18.0;
-      isLastReadShow = preferences.getBool(Constants.LAST_READ) ?? true;
       isDarkMode = Preferences.getbool(key: Constants.isDark) ?? false;
     });
   }
