@@ -8,7 +8,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="ترجمۃ القرآن"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name="com.naeem.tarjumaquran.MainActivity"
             android:launchMode="singleTop"

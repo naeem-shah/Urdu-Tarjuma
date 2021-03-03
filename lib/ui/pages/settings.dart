@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tarjumaquran/branding/themes.dart';
 import 'package:tarjumaquran/helper/preferences.dart';
 
 import '../../Constants/Constants.dart';
@@ -145,11 +146,11 @@ class _SettingsState extends State<Settings> {
                   onChanged: (bool isDark) async {
                     print(isDark);
                     if (isDark){
-                      Get.changeTheme(ThemeData.dark());
+                      Get.changeTheme(CustomThemes.darkTheme);
                       isDarkMode = true;
                       Preferences.setBool(key: Constants.isDark, value: true);
                     } else {
-                      Get.changeTheme(ThemeData.light());
+                      Get.changeTheme(CustomThemes.primaryTheme);
                       isDarkMode = false;
                       Preferences.setBool(key: Constants.isDark, value: false);
                     }
