@@ -1,6 +1,18 @@
 # Urdu Quran Tarjuma
 
 
+<h2> Features </h2>
+<ul>
+  <li>Read by Surah</li>
+  <li>Read by Juz</li>
+  <li>Resume or Last Read</li>
+  <li>Bookmark</li>
+  <li>Copy</li>
+  <li>Share</li>
+  <li>Dark Mode</li>
+  <li>Dynamic font size</li>
+</ul>
+
 <h2>Screenshots</h2>
 
 </br>
