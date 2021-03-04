@@ -10,20 +10,12 @@
   <img src="screenshots/screen2.jpg" width="256">
 </p>
 
-
-
-
-
-
-</br>
-</br>
 </br>
 </br>
 </br>
 </br>
 
 <h3> Dark Mode Theme </3>
-
 </br>
 </br>
 <p align="left">
@@ -35,12 +27,8 @@
 </br>
 </br>
 </br>
-</br>
-</br>
 
 <h3> Settings </h3>
-
-</br>
 </br>
 <p align="left">
   <img src="screenshots/screen3.jpg" width="256">
