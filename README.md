@@ -2,4 +2,4 @@
 
 Screenshots
 
-![Alt text](screenshots/screen1.jpg?raw=true "Title")
+![Alt text](screenshots/screen1.jpg?raw=true "Title",width="48")
