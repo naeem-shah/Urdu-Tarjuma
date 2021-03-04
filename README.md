@@ -1,8 +1,6 @@
 # Urdu Quran Tarjuma by Hafiz Abdulsalam bin Muhammad
 
-Screenshots
-
-
+<h2>Screenshots</h2> 
 <p align="center">
   <img src="screenshots/screen1.jpg" alt="Surah" width="256">
   <img src="screenshots/screen2.jpg" width="256">
