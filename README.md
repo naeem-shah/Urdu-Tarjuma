@@ -19,10 +19,8 @@
 
 
 
-<h6> Settings </h6>
+<h5> Settings </h5>
 
 <p align="center">
   <img src="screenshots/screen3.jpg" width="256">
 </p>
-
-![Alt text](screenshots/screen1.jpg?raw=true "Title",width="48")
