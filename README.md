@@ -10,7 +10,7 @@
 
 
 
-<h6> Dark Mode Theme </6>
+<h3> Dark Mode Theme </3>
 
 <p align="center">
   <img src="screenshots/screen5.jpg" width="256">
@@ -19,7 +19,7 @@
 
 
 
-<h5> Settings </h5>
+<h3> Settings </h3>
 
 <p align="center">
   <img src="screenshots/screen3.jpg" width="256">
