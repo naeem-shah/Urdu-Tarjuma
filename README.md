@@ -5,7 +5,7 @@
 
 </br>
 </br>
-<p align="right">
+<p align="left">
   <img src="screenshots/screen1.jpg" alt="Surah" width="256">
   <img src="screenshots/screen2.jpg" width="256">
 </p>
@@ -26,7 +26,7 @@
 
 </br>
 </br>
-<p align="right">
+<p align="left">
   <img src="screenshots/screen5.jpg" width="256">
   <img src="screenshots/screen4.jpg" width="256">
 </p>
@@ -42,6 +42,6 @@
 
 </br>
 </br>
-<p align="right">
+<p align="left">
   <img src="screenshots/screen3.jpg" width="256">
 </p>
