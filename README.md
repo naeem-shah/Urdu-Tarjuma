@@ -11,6 +11,7 @@
   <li>Share</li>
   <li>Dark Mode</li>
   <li>Dynamic font size</li>
+  <li>Searching</li>
 </ul>
 
 <h2>Screenshots</h2>
