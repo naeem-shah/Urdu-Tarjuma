@@ -28,9 +28,9 @@ dependencies:
   launch_review: ^2.0.0
   flutter_html: ^0.8.2
   url_launcher: ^5.4.2
-  substring_highlight: ^0.1.2
   visibility_detector: ^0.1.5
   scrollable_positioned_list: ^0.1.10
+  flutter_parsed_text: ^1.2.5
 
 dev_dependencies:
   flutter_launcher_icons: ^0.7.4

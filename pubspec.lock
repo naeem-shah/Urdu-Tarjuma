@@ -123,6 +123,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_parsed_text:
+    dependency: "direct main"
+    description:
+      name: flutter_parsed_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -348,13 +355,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0-nullsafety.1"
-  substring_highlight:
-    dependency: "direct main"
-    description:
-      name: substring_highlight
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   synchronized:
     dependency: transitive
     description:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:substring_highlight/substring_highlight.dart';
+import 'package:flutter_parsed_text/flutter_parsed_text.dart';
+import 'package:get/get.dart';
 import 'package:tarjumaquran/models/AyatModel.dart';
 import 'package:tarjumaquran/ui/pages/surah_details.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
@@ -97,7 +98,6 @@ class _SearchState extends State<Search> {
     super.initState();
     aayat = List<AyatModel>();
   }
-
   Widget translationListView(BuildContext context, int index) {
     AyatModel ayatModel = aayat[index];
     String surahName = QuranInfo.surahInfo[ayatModel.suratId-1].urduName;
@@ -105,12 +105,26 @@ class _SearchState extends State<Search> {
     return Card(
       elevation: 4,
       child: ListTile(
-        title: SubstringHighlight(
+        title: ParsedText(
           text: ayatModel.translation,
-          term: queryController.text.trim(),
-          textStyle: TextStyle(fontFamily: "Jameel", fontSize: 18, height: 1.7),
-          textStyleHighlight: TextStyle(fontFamily: "Jameel",
-              color: Colors.red, fontSize: 18, height: 1.7, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontFamily: "Jameel",
+            color: Get.isDarkMode ?Colors.white:Colors.black87,
+            height: 1.7,
+            fontSize: 18
+          ),
+          parse: [
+            if (queryController.text.isNotEmpty)
+              MatchText(
+             pattern: queryController.text,
+              style: TextStyle(
+                  fontFamily: "Jameel",
+                  color: Colors.redAccent,
+                  height: 1.7,
+                  fontSize: 18
+              )
+            )
+          ],
         ),
         subtitle: Container(
           padding: const EdgeInsets.only(top: 8),
