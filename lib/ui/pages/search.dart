@@ -113,18 +113,15 @@ class _SearchState extends State<Search> {
             height: 1.7,
             fontSize: 18
           ),
-          parse: [
-            if (queryController.text.isNotEmpty)
-              MatchText(
-             pattern: queryController.text,
+          parse: queryController.text.trim().isNotEmpty?[MatchText(
+              pattern: queryController.text,
               style: TextStyle(
                   fontFamily: "Jameel",
                   color: Colors.redAccent,
                   height: 1.7,
                   fontSize: 18
               )
-            )
-          ],
+          )]:[],
         ),
         subtitle: Container(
           padding: const EdgeInsets.only(top: 8),

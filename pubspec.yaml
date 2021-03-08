@@ -1,7 +1,7 @@
 name: tarjumaquran
 description: A new Flutter application.
 
-version: 3.0.7+8
+version: 3.0.7+9
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
