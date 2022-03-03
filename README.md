@@ -49,7 +49,7 @@
 </p>
 
 
-<h3> Flutter Doctor </h3>
+### Flutter Doctor
 ``` dart
 
 Doctor summary (to see all details, run flutter doctor -v):
