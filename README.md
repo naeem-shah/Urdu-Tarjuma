@@ -51,6 +51,7 @@
 
 <h3> Flutter Doctor </h3>
 ``` dart
+
 Doctor summary (to see all details, run flutter doctor -v):
 [√] Flutter (Channel stable, 2.10.1, on Microsoft Windows [Version 10.0.19044.1526], locale en-PK)
 [√] Android toolchain - develop for Android devices (Android SDK version 32.1.0-rc1)
