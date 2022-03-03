@@ -46,19 +46,19 @@ class Constants{
   static const IS_FIRST = "firstTime";
 
   static final List<MyActions> actions = [
-    new MyActions(action: BOOKMARK, icon: Icons.star),
-    new MyActions(action: SETTINGS, icon: Icons.settings),
-    new MyActions(action: FEEDBACK, icon: Icons.feedback),
-    new MyActions(action: SHARE_APP, icon: Icons.share),
-    new MyActions(action: COPY_LINK, icon: Icons.content_copy),
-    new MyActions(action: EMAIL_DEVELOPER, icon: Icons.email),
+    MyActions(action: BOOKMARK, icon: Icons.star),
+    MyActions(action: SETTINGS, icon: Icons.settings),
+    MyActions(action: FEEDBACK, icon: Icons.feedback),
+    MyActions(action: SHARE_APP, icon: Icons.share),
+    MyActions(action: COPY_LINK, icon: Icons.content_copy),
+    MyActions(action: EMAIL_DEVELOPER, icon: Icons.email),
   ];
 
 }
 
 class MyActions{
-  String action;
-  IconData icon;
+  String? action;
+  IconData? icon;
 
   MyActions({this.action, this.icon});
 

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +12,10 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  SharedPreferences preferences;
-  List<int> arabicFont;
-  List<int> translationFont;
-  Brightness brightness;
+  late SharedPreferences preferences;
+  late List<int> arabicFont;
+  late List<int> translationFont;
+  Brightness? brightness;
 
   double currentArabicFont = 20.0;
   double currentTranslationFont = 18.0;
@@ -26,7 +25,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('سیٹنگز', style: TextStyle(fontFamily: "Jameel"),),
+        title: const Text('سیٹنگز', style: TextStyle(fontFamily: "Jameel"),),
         centerTitle: true,
       ),
       body: ListView(
@@ -38,7 +37,7 @@ class _SettingsState extends State<Settings> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Text("عربی فاؤنٹ", style: TextStyle(fontSize: 20, fontFamily: "Jameel"),),
                 ),
@@ -52,11 +51,11 @@ class _SettingsState extends State<Settings> {
                               value: e,
                             )
                         ).toList(),
-                        onChanged: (int value) {
+                        onChanged: (int? value) {
                           setState(() {
-                            currentArabicFont = value.toDouble();
+                            currentArabicFont = value!.toDouble();
                           });
-                          preferences.setDouble(Constants.ARABIC_FONT, value.toDouble());
+                          preferences.setDouble(Constants.ARABIC_FONT, value!.toDouble());
                         }
                     )
                 )
@@ -88,7 +87,7 @@ class _SettingsState extends State<Settings> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Text("ترجمہ فاؤنٹ", style: TextStyle(fontSize: 20, fontFamily: "Jameel"),),
                 ),
@@ -102,11 +101,11 @@ class _SettingsState extends State<Settings> {
                               value: e,
                             )
                         ).toList(),
-                        onChanged: (int value) {
+                        onChanged: (int? value) {
                           setState(() {
-                            currentTranslationFont = value.toDouble();
+                            currentTranslationFont = value!.toDouble();
                           });
-                          preferences.setDouble(Constants.TRANSLATION_FONT, value.toDouble());
+                          preferences.setDouble(Constants.TRANSLATION_FONT, value!.toDouble());
                         }
                     )
                 )
@@ -137,7 +136,7 @@ class _SettingsState extends State<Settings> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Text("ڈارک موڈ تھیم", style: TextStyle(fontSize: 20, fontFamily: "Jameel"),),
                 ),
@@ -174,8 +173,8 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     getPreferences();
-    arabicFont = new List<int>();
-    translationFont = new List<int>();
+    arabicFont = <int>[];
+    translationFont = <int>[];
     for (int i = 8; i <= 60; i=i+2){
       arabicFont.add(i);
       translationFont.add(i);

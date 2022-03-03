@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
@@ -9,23 +8,19 @@ import 'package:tarjumaquran/Constants/Constants.dart';
 import '../models/AyatModel.dart';
 
 class DbManager {
-  static DbManager _databaseManger;
-  static Database _database;
+  static DbManager? _databaseManger;
+  static Database? _database;
 
   DbManager._createInstance();
 
   factory DbManager() {
-    if (_databaseManger == null) {
-      _databaseManger = DbManager._createInstance();
-    }
-    return _databaseManger;
+    _databaseManger ??= DbManager._createInstance();
+    return _databaseManger!;
   }
 
   Future<Database> get database async {
-    if (_database == null) {
-      _database = await initializeDatabase();
-    }
-    return _database;
+    _database ??= await initializeDatabase();
+    return _database!;
   }
 
   Future<Database> initializeDatabase() async {
@@ -59,17 +54,17 @@ class DbManager {
     return await openDatabase(path);
   }
 
-  Future<List<Map<String, dynamic>>> getMapList(String column, int position) async {
-    Database db = await this.database;
+  Future<List<Map<String, dynamic>>> getMapList(String column, int? position) async {
+    Database db = await database;
     
     return await db.query(Constants.DATA, where: '$column = ?', whereArgs: [position]);
   }
 
-  Future<List<AyatModel>> getSurah(String column, int position) async {
+  Future<List<AyatModel>> getSurah(String column, int? position) async {
     var mapList = await getMapList(column, position);
     int count = mapList.length;
 
-    List<AyatModel> list = new List<AyatModel>();
+    List<AyatModel> list = <AyatModel>[];
     
     for(int i = 0; i<count; i++){
       list.add(AyatModel.fromMapObject(mapList[i]));
@@ -83,7 +78,7 @@ class DbManager {
     var mapList = await getMapList(Constants.IS_Favourite, 1);
     int count = mapList.length;
 
-    List<AyatModel> list = new List<AyatModel>();
+    List<AyatModel> list = <AyatModel>[];
 
     for(int i = 0; i<count; i++){
       list.add(AyatModel.fromMapObject(mapList[i]));
@@ -94,20 +89,20 @@ class DbManager {
   }
 
   Future<int> update(AyatModel ayatModel) async {
-    Database db = await this.database;
+    Database db = await database;
     return db.update(Constants.DATA, ayatModel.toMap(), where: '${Constants.ID} = ?', whereArgs: [ayatModel.id]);
   }
 
   Future<List<AyatModel>> find(String column, String query) async {
-    Database db = await this.database;
+    Database db = await database;
 
-    List<AyatModel> ayatList = new List<AyatModel>();
+    List<AyatModel> ayatList = <AyatModel>[];
 
     var list = await db.rawQuery('SELECT * FROM ${Constants.DATA} WHERE $column LIKE "%$query%";');
 
-    list.forEach((element) {
+    for (var element in list) {
       ayatList.add(AyatModel.fromMapObject(element));
-    });
+    }
 
     return ayatList;
   }

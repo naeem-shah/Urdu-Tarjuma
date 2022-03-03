@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomThemes {
 
-  static ThemeData primaryTheme = ThemeData(primarySwatch: MaterialColor(0xff006f44, {
+  static ThemeData primaryTheme = ThemeData(primarySwatch: const MaterialColor(0xff006f44, {
   50:Color.fromRGBO(229,255,255, .1),
   100:Color.fromRGBO(204,255,255, .2),
   200:Color.fromRGBO(179,255,247, .3),

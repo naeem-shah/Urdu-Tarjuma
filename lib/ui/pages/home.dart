@@ -6,7 +6,6 @@ import 'package:launch_review/launch_review.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tarjumaquran/Constants/Constants.dart';
-import 'package:tarjumaquran/Database/DatabaseManager.dart';
 import 'package:tarjumaquran/QuranData/QuranInfo.dart';
 import 'package:tarjumaquran/Utilities/utilities.dart';
 import 'package:tarjumaquran/ui/widget/home_listview_widget.dart';
@@ -23,7 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SharedPreferences preferences;
+  late SharedPreferences preferences;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +30,20 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Scaffold(
 
-        body: new NestedScrollView(
+        body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              new SliverAppBar(
-                title: new Text(
+              SliverAppBar(
+                title: const Text(
                   "اردو آسان ترجمہ",
                   style: TextStyle(
                       fontFamily: "Jameel", fontWeight: FontWeight.w500),
                 ),
                 pinned: true,
                 floating: true,
-                bottom: new TabBar(
+                bottom: const TabBar(
                   tabs: <Tab>[
-                    new Tab(
+                    Tab(
                       child: Text(
                         "سورتیں",
                         style: TextStyle(
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w500),
                       ),
                     ),
-                    new Tab(
+                    Tab(
                       child: Text(
                         "پارے",
                         style: TextStyle(
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 actions: <Widget>[
                   IconButton(
                       tooltip: "resume",
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.menu_book_outlined,
                       ),
                       onPressed: () {
@@ -92,11 +91,11 @@ class _HomePageState extends State<HomePage> {
                       }),
                   IconButton(
                       tooltip: "Search",
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.search,
                       ),
                       onPressed: () {
-                        Route route = new MaterialPageRoute(
+                        Route route = MaterialPageRoute(
                             builder: (context) => Search());
                         Navigator.push(context, route);
                       }),
@@ -109,8 +108,8 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  choice.action,
-                                  style: TextStyle(fontFamily: "Jameel"),
+                                  choice.action!,
+                                  style: const TextStyle(fontFamily: "Jameel"),
                                 ),
                                 Icon(
                                   choice.icon,
@@ -122,13 +121,13 @@ class _HomePageState extends State<HomePage> {
                           );
                         }).toList();
                       },
-                    icon: Icon(Icons.more_vert),
+                    icon: const Icon(Icons.more_vert),
                   ),
                 ],
               ),
             ];
           },
-          body: new TabBarView(
+          body: TabBarView(
             children: <Widget>[
               HomeListView(QuranInfo.surahInfo, Constants.SURAH),
               HomeListView(QuranInfo.juzInfo, Constants.PARAH),
@@ -143,7 +142,7 @@ class _HomePageState extends State<HomePage> {
     if (choice == Constants.BOOKMARK) {
       Get.to(() =>Bookmarks());
     } else if (choice == Constants.COPY_LINK) {
-      Clipboard.setData(new ClipboardData(text: Constants.APP_LINK));
+      Clipboard.setData(const ClipboardData(text: Constants.APP_LINK));
       Utilities.showMessage(message: "Copied to Clipboard");
     } else if (choice == Constants.FEEDBACK) {
       LaunchReview.launch(androidAppId: Constants.APP_ID);
@@ -160,20 +159,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   showEmailDialog() {
-    final nameController = new TextEditingController();
-    final messageController = new TextEditingController();
+    final nameController = TextEditingController();
+    final messageController = TextEditingController();
 
     bool nameValidate = false;
     bool messageValidate = false;
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
-        builder: (context, setState) => new AlertDialog(
-          title: Text(
+        builder: (context, setState) => AlertDialog(
+          title: const Text(
             "اپنا پیغام لکھیں",
             style: TextStyle(fontFamily: "Jameel"),
           ),
-          content: Container(
+          content: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Column(
@@ -185,26 +184,27 @@ class _HomePageState extends State<HomePage> {
                     textInputAction: TextInputAction.next,
                     controller: nameController,
                     onChanged: (text) {
-                      if (text.trim().isNotEmpty)
+                      if (text.trim().isNotEmpty) {
                         setState(() {
                           nameValidate = false;
                         });
+                      }
                     },
-                    style: TextStyle(fontFamily: "Jameel", fontSize: 18),
+                    style: const TextStyle(fontFamily: "Jameel", fontSize: 18),
                     decoration: InputDecoration(
                       filled: true,
                       hintText: "نام",
-                      errorStyle: TextStyle(fontFamily: "Jameel", fontSize: 16),
+                      errorStyle: const TextStyle(fontFamily: "Jameel", fontSize: 16),
                       errorText:
                       nameValidate ? "برائے مہربانی نام لکھیں" : null,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     keyboardType: TextInputType.text,
-                    style: TextStyle(fontFamily: "Jameel", fontSize: 18),
+                    style: const TextStyle(fontFamily: "Jameel", fontSize: 18),
                     textInputAction: TextInputAction.send,
                     minLines: 3,
                     maxLines: 4,
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: InputDecoration(
                       filled: true,
                       hintText: "پیغام",
-                      errorStyle: TextStyle(fontFamily: "Jameel", fontSize: 16),
+                      errorStyle: const TextStyle(fontFamily: "Jameel", fontSize: 16),
                       errorText:
                       messageValidate ? "برائے مہربانی پیغام لکھیں" : null,
                     ),
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
           contentPadding:
           const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 String name = nameController.text.trim().toString();
                 String message = messageController.text.trim().toString();
@@ -248,19 +248,19 @@ class _HomePageState extends State<HomePage> {
                   });
                   return;
                 }
-                Get.focusScope.unfocus();
+                Get.focusScope!.unfocus();
                 mailTo(name, message);
               },
-              child: Text(
+              child: const Text(
                 "ارسال کریں",
                 style: TextStyle(fontFamily: "Jameel"),
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(
+              child: const Text(
                 "مسخ کریں",
                 style: TextStyle(fontFamily: "Jameel"),
               ),

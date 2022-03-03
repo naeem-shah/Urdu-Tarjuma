@@ -14,22 +14,22 @@ class Bookmarks extends StatefulWidget {
 }
 
 class _BookmarksState extends State<Bookmarks> {
-  DbManager dbManager = new DbManager();
-  List<AyatModel> aayatList;
+  DbManager dbManager = DbManager();
+  late List<AyatModel> aayatList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("بک مارک", style: TextStyle(fontFamily: "Jameel"),),
+        title: const Text("بک مارک", style: TextStyle(fontFamily: "Jameel"),),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
         child: aayatList.isNotEmpty ? ListView.builder(
             itemBuilder: (BuildContext context, int index) => makeListView(context, index),
             itemCount: aayatList.length,
-        ) : Center(child: Text("آپ نے ابھی تک کوئی بک مارک نہیں لگایا۔", style: TextStyle(fontFamily: 'Jameel', fontSize: 18),),),
+        ) : const Center(child: Text("آپ نے ابھی تک کوئی بک مارک نہیں لگایا۔", style: TextStyle(fontFamily: 'Jameel', fontSize: 18),),),
       ),
     );
   }
@@ -38,7 +38,7 @@ class _BookmarksState extends State<Bookmarks> {
   @override
   void initState() {
     super.initState();
-    aayatList = List<AyatModel>();
+    aayatList = <AyatModel>[];
     getBookMars();
   }
 
@@ -46,36 +46,36 @@ class _BookmarksState extends State<Bookmarks> {
 
     AyatModel ayatModel = aayatList[index];
 
-    String surahName = QuranInfo.surahInfo[ayatModel.suratId-1].urduName;
-    String ayatNo = ayatModel.ayatNo == "0" ? 'سورۃ $surahName' : surahName+ " : " +ayatModel.ayatNo;
+    String? surahName = QuranInfo.surahInfo[ayatModel.suratId!-1].urduName;
+    String ayatNo = ayatModel.ayatNo == "0" ? 'سورۃ $surahName' : surahName!+ " : " +ayatModel.ayatNo!;
 
     return Card(
       elevation: 4,
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: GestureDetector(
         onTap: (){
-          Route route = new MaterialPageRoute(builder: (context) => SurahDetailList(surahId: ayatModel.suratId, title: surahName, scroll: int.parse(ayatModel.ayatNo),));
+          Route route = MaterialPageRoute(builder: (context) => SurahDetailList(surahId: ayatModel.suratId, title: surahName, scroll: int.parse(ayatModel.ayatNo!),));
           Navigator.push(context, route);
         },
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  ayatModel.ayat,
-                  style: TextStyle(fontFamily: "NooreHuda", fontSize: 24),
+                  ayatModel.ayat!,
+                  style: const TextStyle(fontFamily: "NooreHuda", fontSize: 24),
                   textDirection: TextDirection.rtl,
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  ayatModel.translation,
+                  ayatModel.translation!,
                   style:
-                  TextStyle(fontFamily: "Jameel", fontSize: 18, height: 1.5),
+                  const TextStyle(fontFamily: "Jameel", fontSize: 18, height: 1.5),
                   textDirection: TextDirection.rtl,
                 ),
               ),
@@ -92,7 +92,7 @@ class _BookmarksState extends State<Bookmarks> {
                         padding: const EdgeInsets.only(top: 8, right: 16),
                         child: Text(
                           ayatNo,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: "Jameel",
                               fontWeight: FontWeight.w400,
                               fontSize: 18),
@@ -101,10 +101,8 @@ class _BookmarksState extends State<Bookmarks> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: FlatButton.icon(
-                          padding: EdgeInsets.all(0),
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                      child: TextButton.icon(
+
                           onPressed: () async {
                             Utilities.showMessage(message: "Bookmark Removed");
                             ayatModel.isFavourite = false;
@@ -113,33 +111,29 @@ class _BookmarksState extends State<Bookmarks> {
                               aayatList.removeAt(index);
                             });
                           },
-                          icon: Icon(Icons.star),
-                          label: SizedBox.shrink()),
+                          icon: const Icon(Icons.star),
+                          label: const SizedBox.shrink()),
                     ),
                     Expanded(
                       flex: 1,
-                      child: FlatButton.icon(
-                          padding: EdgeInsets.all(0),
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                      child: TextButton.icon(
+
                           onPressed: (){
-                            Clipboard.setData(new ClipboardData(text: ayatModel.ayat + "\n" + ayatModel.translation));
+                            Clipboard.setData(ClipboardData(text: ayatModel.ayat! + "\n" + ayatModel.translation!));
                             Utilities.showMessage(message: "Copied to Clipboard");
                           },
-                          icon: Icon(Icons.content_copy),
-                          label: SizedBox.shrink()),
+                          icon: const Icon(Icons.content_copy),
+                          label: const SizedBox.shrink()),
                     ),
                     Expanded(
                       flex: 1,
-                      child: FlatButton.icon(
-                          padding: EdgeInsets.all(0),
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                      child: TextButton.icon(
+
                           onPressed: (){
-                            Share.share(ayatModel.ayat + "\n" + ayatModel.translation);
+                            Share.share(ayatModel.ayat! + "\n" + ayatModel.translation!);
                           },
-                          icon: Icon(Icons.share),
-                          label: SizedBox.shrink()),
+                          icon: const Icon(Icons.share),
+                          label: const SizedBox.shrink()),
                     ),
 
                   ],

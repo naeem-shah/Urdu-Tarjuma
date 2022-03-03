@@ -15,23 +15,23 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
 
-  DbManager dbManager = new DbManager();
+  DbManager dbManager = DbManager();
 
-  int currentValue = 0;
-  String currentText = '';
+  int? currentValue = 0;
+  String? currentText = '';
   List<GroupModel> group = [
     GroupModel(text: 'قرآن', index: 0),
     GroupModel(text: 'ترجمہ', index: 1)
   ];
 
-  List<AyatModel> aayat;
+  late List<AyatModel> aayat;
   final queryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تلاش کریں',style: TextStyle(fontFamily: "Jameel"),),
+        title: const Text('تلاش کریں',style: TextStyle(fontFamily: "Jameel"),),
         centerTitle: true,
       ),
       body: Column(
@@ -40,7 +40,7 @@ class _SearchState extends State<Search> {
             padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
             child: TextField(
               controller: queryController,
-              style: TextStyle(fontFamily: "Jameel", fontSize: 18),
+              style: const TextStyle(fontFamily: "Jameel", fontSize: 18),
               textInputAction: TextInputAction.search,
               onChanged: (text) async {
 
@@ -51,7 +51,7 @@ class _SearchState extends State<Search> {
                   aayat.addAll(list);
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 hintText: 'یہاں لکھیں',
                 prefixIcon: Icon(Icons.search),
@@ -66,10 +66,10 @@ class _SearchState extends State<Search> {
               children: group.map((t) =>
                   Expanded(
                     child: RadioListTile(
-                      title: Text("${t.text}",style: TextStyle(fontFamily: "Jameel"),),
+                      title: Text(t.text!,style: const TextStyle(fontFamily: "Jameel"),),
                       groupValue: currentValue,
                       value: t.index,
-                      onChanged: (val) {
+                      onChanged: (dynamic val) {
                         setState(() {
                           currentValue = val;
                           currentText = t.text;
@@ -96,17 +96,17 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    aayat = List<AyatModel>();
+    aayat = <AyatModel>[];
   }
   Widget translationListView(BuildContext context, int index) {
     AyatModel ayatModel = aayat[index];
-    String surahName = QuranInfo.surahInfo[ayatModel.suratId-1].urduName;
-    String ayatNo = ayatModel.ayatNo == "0" ? "سورہ "+surahName : ' سورہ $surahName : '  +ayatModel.ayatNo;
+    String? surahName = QuranInfo.surahInfo[ayatModel.suratId!-1].urduName;
+    String ayatNo = ayatModel.ayatNo == "0" ? "سورہ "+surahName! : ' سورہ $surahName : '  +ayatModel.ayatNo!;
     return Card(
       elevation: 4,
       child: ListTile(
         title: ParsedText(
-          text: ayatModel.translation,
+          text: ayatModel.translation!,
           style: TextStyle(
             fontFamily: "Jameel",
             color: Get.isDarkMode ?Colors.white:Colors.black87,
@@ -115,7 +115,7 @@ class _SearchState extends State<Search> {
           ),
           parse: queryController.text.trim().isNotEmpty?[MatchText(
               pattern: queryController.text,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: "Jameel",
                   color: Colors.redAccent,
                   height: 1.7,
@@ -128,11 +128,11 @@ class _SearchState extends State<Search> {
           decoration: BoxDecoration(
             border: Border(top: BorderSide(color: Colors.grey.shade300))
           ),
-            child: Text(ayatNo, style: TextStyle(fontFamily: "Jameel", fontSize: 16,),)
+            child: Text(ayatNo, style: const TextStyle(fontFamily: "Jameel", fontSize: 16,),)
         ),
         onTap: (){
           FocusScope.of(context).requestFocus(FocusNode());
-          Route route = new MaterialPageRoute(builder: (context)=> SurahDetailList(title: surahName, surahId: ayatModel.suratId,scroll: int.parse(ayatModel.ayatNo),));
+          Route route = MaterialPageRoute(builder: (context)=> SurahDetailList(title: surahName, surahId: ayatModel.suratId,scroll: int.parse(ayatModel.ayatNo!),));
           Navigator.push(context, route);
         },
       ),
@@ -141,22 +141,22 @@ class _SearchState extends State<Search> {
 
   Widget quranListView(BuildContext context, int index) {
     AyatModel ayatModel = aayat[index];
-    String surahName = QuranInfo.surahInfo[ayatModel.suratId-1].urduName;
-    String ayatNo = ayatModel.ayatNo == "0" ? "سورہ "+surahName : ' سورہ $surahName : '  +ayatModel.ayatNo;
+    String? surahName = QuranInfo.surahInfo[ayatModel.suratId!-1].urduName;
+    String ayatNo = ayatModel.ayatNo == "0" ? "سورہ "+surahName! : ' سورہ $surahName : '  +ayatModel.ayatNo!;
     return Card(
       elevation: 4,
       child: ListTile(
-        title: Text(ayatModel.ayat, style: TextStyle(fontFamily: "NooreHuda", fontSize: 20,),),
+        title: Text(ayatModel.ayat!, style: const TextStyle(fontFamily: "NooreHuda", fontSize: 20,),),
         subtitle: Container(
             padding: const EdgeInsets.only(top: 8),
             decoration: BoxDecoration(
                 border: Border(top: BorderSide(color: Colors.grey.shade300))
             ),
-            child: Text(ayatNo, style: TextStyle(fontFamily: "Jameel", fontSize: 16,),)
+            child: Text(ayatNo, style: const TextStyle(fontFamily: "Jameel", fontSize: 16,),)
         ),
           onTap: (){
             FocusScope.of(context).requestFocus(FocusNode());
-            Route route = new MaterialPageRoute(builder: (context)=> SurahDetailList(title: surahName, surahId: ayatModel.suratId,scroll: int.parse(ayatModel.ayatNo),));
+            Route route = MaterialPageRoute(builder: (context)=> SurahDetailList(title: surahName, surahId: ayatModel.suratId,scroll: int.parse(ayatModel.ayatNo!),));
             Navigator.push(context, route);
           },
       ),
@@ -165,8 +165,8 @@ class _SearchState extends State<Search> {
 }
 
 class GroupModel{
-  String text;
-  int index;
+  String? text;
+  int? index;
   GroupModel({this.text, this.index});
 
 }

@@ -9,11 +9,11 @@ class HomeListView extends StatefulWidget {
   final List<Info> infoList;
   final String set;
 
-  HomeListView(this.infoList, this.set);
+  const HomeListView(this.infoList, this.set);
 
   @override
   _HomeListViewState createState() =>
-      _HomeListViewState(this.set);
+      _HomeListViewState(set);
 }
 
 class _HomeListViewState extends State<HomeListView> {
@@ -50,7 +50,7 @@ class _HomeListViewState extends State<HomeListView> {
   Widget makeList(BuildContext context, int index) {
     Info info = infoList[index];
     return Card(
-        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         elevation: 4,
         child: InkWell(
           borderRadius: BorderRadius.circular(4),
@@ -81,9 +81,9 @@ class _HomeListViewState extends State<HomeListView> {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    info.urduName,
+                    info.urduName!,
                     textAlign: TextAlign.right,
-                    style: TextStyle(fontFamily: "NooreHuda", fontSize: 22),
+                    style: const TextStyle(fontFamily: "NooreHuda", fontSize: 22),
                   ),
                 ),
                 Expanded(
@@ -91,7 +91,7 @@ class _HomeListViewState extends State<HomeListView> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      info.engName,
+                      info.engName!,
                       softWrap: false,
                       overflow: TextOverflow.fade,
                     ),
@@ -101,7 +101,7 @@ class _HomeListViewState extends State<HomeListView> {
                   padding: const EdgeInsets.only(right: 16),
                   child: Text(
                     info.id.toString(),
-                    style: TextStyle(fontWeight: FontWeight.w700),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -112,19 +112,19 @@ class _HomeListViewState extends State<HomeListView> {
 
   void filter(String query) {
     if (query.isNotEmpty) {
-      List<Info> dummySearchList = List<Info>();
+      List<Info> dummySearchList = <Info>[];
       dummySearchList.addAll(QuranInfo.surahInfo);
-      List<Info> dummyListData = List<Info>();
-      dummySearchList.forEach((item) {
-        int id = item.id;
-        String eng = item.engName.toLowerCase();
-        String urdu = item.urduName;
+      List<Info> dummyListData = <Info>[];
+      for (var item in dummySearchList) {
+        int? id = item.id;
+        String eng = item.engName!.toLowerCase();
+        String? urdu = item.urduName;
         if (id.toString().contains(query) ||
             eng.contains(query.toLowerCase()) ||
-            urdu.contains(query)) {
+            urdu!.contains(query)) {
           dummyListData.add(item);
         }
-      });
+      }
       setState(() {
         infoList.clear();
         infoList.addAll(dummyListData);

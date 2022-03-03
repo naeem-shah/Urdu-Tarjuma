@@ -1,15 +1,15 @@
 import 'package:tarjumaquran/Constants/Constants.dart';
 
 class AyatModel {
-  int id;
-  int suratId;
-  String ayatNo;
-  String ayat;
-  String ayatSimple;
-  String translation;
-  int parhNo;
-  String reference;
-  bool isFavourite;
+  int? id;
+  int? suratId;
+  String? ayatNo;
+  String? ayat;
+  String? ayatSimple;
+  String? translation;
+  int? parhNo;
+  String? reference;
+  bool? isFavourite;
 
   AyatModel(
       {this.id,
@@ -22,30 +22,30 @@ class AyatModel {
       this.isFavourite});
 
   Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
 
-    map[Constants.ID] = this.id;
-    map[Constants.SURAT_ID] = this.suratId;
-    map[Constants.AYAT_NO] = this.ayatNo;
-    map[Constants.AYAT] = this.ayat;
-    map[Constants.AYAT_SIMPLE] = this.ayatSimple;
-    map[Constants.TRANSLATION] = this.translation;
-    map[Constants.PARAH] = this.parhNo;
-    map[Constants.REFERENCE] = this.reference;
-    map[Constants.IS_Favourite] = this.isFavourite == true ? 1 : 0;
+    map[Constants.ID] = id;
+    map[Constants.SURAT_ID] = suratId;
+    map[Constants.AYAT_NO] = ayatNo;
+    map[Constants.AYAT] = ayat;
+    map[Constants.AYAT_SIMPLE] = ayatSimple;
+    map[Constants.TRANSLATION] = translation;
+    map[Constants.PARAH] = parhNo;
+    map[Constants.REFERENCE] = reference;
+    map[Constants.IS_Favourite] = isFavourite == true ? 1 : 0;
 
     return map;
   }
 
   AyatModel.fromMapObject(Map<String, dynamic> map) {
-    this.id = map[Constants.ID];
-    this.suratId = map[Constants.SURAT_ID];
-    this.ayat = map[Constants.AYAT];
-    this.ayatSimple = map[Constants.AYAT_SIMPLE];
-    this.translation = map[Constants.TRANSLATION];
-    this.ayatNo = map[Constants.AYAT_NO];
-    this.parhNo = map[Constants.PARAH];
-    this.reference = map[Constants.REFERENCE];
-    this.isFavourite = map[Constants.IS_Favourite] == 1 ? true : false;
+    id = map[Constants.ID];
+    suratId = map[Constants.SURAT_ID];
+    ayat = map[Constants.AYAT];
+    ayatSimple = map[Constants.AYAT_SIMPLE];
+    translation = map[Constants.TRANSLATION];
+    ayatNo = map[Constants.AYAT_NO];
+    parhNo = map[Constants.PARAH];
+    reference = map[Constants.REFERENCE];
+    isFavourite = map[Constants.IS_Favourite] == 1 ? true : false;
   }
 }

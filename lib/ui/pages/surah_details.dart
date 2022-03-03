@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:screen/screen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,20 +13,20 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../QuranData/QuranInfo.dart';
 
 class SurahDetailList extends StatefulWidget {
-  final int surahId;
-  final String title;
-  final int scroll;
+  final int? surahId;
+  final String? title;
+  final int? scroll;
 
-  SurahDetailList({this.surahId, this.title, this.scroll});
+  const SurahDetailList({this.surahId, this.title, this.scroll});
 
   @override
   _SurahDetailListState createState() =>
-      new _SurahDetailListState(this.surahId, this.title, this.scroll);
+      _SurahDetailListState(surahId, title, scroll);
 }
 
 class _SurahDetailListState extends State<SurahDetailList> {
-  DbManager dbManager = new DbManager();
-  SharedPreferences preferences;
+  DbManager dbManager = DbManager();
+  late SharedPreferences preferences;
 
   final ItemScrollController itemScrollController = ItemScrollController();
 
@@ -36,10 +35,10 @@ class _SurahDetailListState extends State<SurahDetailList> {
 
   List<AyatModel> aayatList = [];
 
-  final int surahId;
-  final String title;
-  final int scroll;
-  int currentItem;
+  final int? surahId;
+  final String? title;
+  final int? scroll;
+  int? currentItem;
 
   int lastVisible = 1;
 
@@ -55,8 +54,8 @@ class _SurahDetailListState extends State<SurahDetailList> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            title,
-            style: TextStyle(
+            title!,
+            style: const TextStyle(
               fontFamily: "NooreHuda",
             ),
           ),
@@ -69,13 +68,13 @@ class _SurahDetailListState extends State<SurahDetailList> {
                   child: DropdownButtonFormField(
                     value: currentItem,
                     dropdownColor: Get.theme.primaryColor,
-                    style: TextStyle(color: Colors.white),
-                    icon: Icon(
+                    style: const TextStyle(color: Colors.white),
+                    icon: const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.white,
                     ),
-                    onChanged: (int value) {
-                      itemScrollController.jumpTo(index: value);
+                    onChanged: (int? value) {
+                      itemScrollController.jumpTo(index: value!);
                       setState(() {
                         currentItem = value;
                       });
@@ -88,7 +87,7 @@ class _SurahDetailListState extends State<SurahDetailList> {
                               child: Text("${index + 1}",),
                               value: index + 1,
                             )),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "آیت نمبر",
                       border: InputBorder.none,
                       hintStyle:
@@ -117,7 +116,7 @@ class _SurahDetailListState extends State<SurahDetailList> {
                     child: makeListView(index)
                 ),
               )
-              : Center(
+              : const Center(
                   child: CircularProgressIndicator(),
                 ),
         ),
@@ -128,7 +127,7 @@ class _SurahDetailListState extends State<SurahDetailList> {
   @override
   void initState() {
     super.initState();
-    Screen.keepOn(true);
+
     updateUi();
   }
 
@@ -140,8 +139,8 @@ class _SurahDetailListState extends State<SurahDetailList> {
     });
 
     if (scroll != null) {
-      Future.delayed(Duration(milliseconds: 100),(){
-        itemScrollController.jumpTo(index: scroll);
+      Future.delayed(const Duration(milliseconds: 100),(){
+        itemScrollController.jumpTo(index: scroll!);
       });
     }
 
@@ -153,7 +152,7 @@ class _SurahDetailListState extends State<SurahDetailList> {
 
   bool onBackPress() {
     preferences.setInt(Constants.SCROLL_POSITION, lastVisible);
-    preferences.setInt(Constants.ID, surahId);
+    preferences.setInt(Constants.ID, surahId!);
     preferences.setString(Constants.SET, Constants.SURAH);
 
     return true;
@@ -162,31 +161,31 @@ class _SurahDetailListState extends State<SurahDetailList> {
   Widget makeListView(int index) {
     AyatModel ayatModel = aayatList[index];
 
-    IconData favourite = ayatModel.isFavourite ? Icons.star : Icons.star_border;
+    IconData favourite = ayatModel.isFavourite! ? Icons.star : Icons.star_border;
     String ayatNo = ayatModel.ayatNo == "0"
         ? 'سورۃ $title'
-        : "آیت نمبر (" + ayatModel.ayatNo + ")";
+        : "آیت نمبر (" + ayatModel.ayatNo! + ")";
 
     return Card(
         elevation: 4,
-        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               width: MediaQuery.of(context).size.width,
               child: Text(
-                ayatModel.ayat,
+                ayatModel.ayat!,
                 style: TextStyle(fontFamily: "NooreHuda", fontSize: arabicFont),
                 textDirection: TextDirection.rtl,
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               width: MediaQuery.of(context).size.width,
               child: Text(
-                ayatModel.translation,
+                ayatModel.translation!,
                 style: TextStyle(
                     fontFamily: "Jameel",
                     fontSize: translationFont,
@@ -207,7 +206,7 @@ class _SurahDetailListState extends State<SurahDetailList> {
                       padding: const EdgeInsets.only(top: 8, right: 16),
                       child: Text(
                         ayatNo,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: "Jameel",
                             fontWeight: FontWeight.w400,
                             fontSize: 18),
@@ -216,10 +215,8 @@ class _SurahDetailListState extends State<SurahDetailList> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
+
                         onPressed: () async {
                           if (favourite == Icons.star) {
                             setState(() {
@@ -243,36 +240,32 @@ class _SurahDetailListState extends State<SurahDetailList> {
                           }
                         },
                         icon: Icon(favourite),
-                        label: SizedBox.shrink()),
+                        label: const SizedBox.shrink()),
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
+
                         onPressed: () {
-                          Clipboard.setData(new ClipboardData(
-                              text: ayatModel.ayat +
+                          Clipboard.setData(ClipboardData(
+                              text: ayatModel.ayat! +
                                   "\n" +
-                                  ayatModel.translation));
+                                  ayatModel.translation!));
                           Utilities.showMessage(message: "Copied to Clipboard");
                         },
-                        icon: Icon(Icons.content_copy),
-                        label: SizedBox.shrink()),
+                        icon: const Icon(Icons.content_copy),
+                        label: const SizedBox.shrink()),
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
+
                         onPressed: () {
                           Share.share(
-                              ayatModel.ayat + "\n" + ayatModel.translation);
+                              ayatModel.ayat! + "\n" + ayatModel.translation!);
                         },
-                        icon: Icon(Icons.share),
-                        label: SizedBox.shrink()),
+                        icon: const Icon(Icons.share),
+                        label: const SizedBox.shrink()),
                   ),
                 ],
               ),
@@ -283,21 +276,21 @@ class _SurahDetailListState extends State<SurahDetailList> {
 }
 
 class ParahDetailList extends StatefulWidget {
-  final int juzId;
-  final bool isSurah;
-  final String title;
-  final int scroll;
+  final int? juzId;
+  final bool? isSurah;
+  final String? title;
+  final int? scroll;
 
-  ParahDetailList({this.juzId, this.isSurah, this.title, this.scroll});
+  const ParahDetailList({this.juzId, this.isSurah, this.title, this.scroll});
 
   @override
   _ParahDetailListState createState() =>
-      _ParahDetailListState(this.juzId, this.isSurah, this.title, this.scroll);
+      _ParahDetailListState(juzId, isSurah, title, scroll);
 }
 
 class _ParahDetailListState extends State<ParahDetailList> {
-  DbManager dbManager = new DbManager();
-  SharedPreferences preferences;
+  DbManager dbManager = DbManager();
+  late SharedPreferences preferences;
 
   double arabicFont = 24.0;
   double translationFont = 18.0;
@@ -307,18 +300,17 @@ class _ParahDetailListState extends State<ParahDetailList> {
 
   List<AyatModel> aayatList = [];
 
-  final int juzId;
-  final bool isSurah;
-  final String title;
-  final int scroll;
-  int currentItem;
-  int lastVisible;
+  final int? juzId;
+  final bool? isSurah;
+  final String? title;
+  final int? scroll;
+  int? currentItem;
+  late int lastVisible;
 
   _ParahDetailListState(this.juzId, this.isSurah, this.title, this.scroll);
 
   @override
   Widget build(BuildContext context) {
-    Screen.keepOn(true);
     return WillPopScope(
       onWillPop: () async {
         return onBackPress();
@@ -328,8 +320,8 @@ class _ParahDetailListState extends State<ParahDetailList> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              title,
-              style: TextStyle(
+              title!,
+              style: const TextStyle(
                 fontFamily: "NooreHuda",
               ),
             ),
@@ -350,7 +342,7 @@ class _ParahDetailListState extends State<ParahDetailList> {
                             child: makeListView(context, index)),
               itemScrollController: itemScrollController,
                   )
-                : Center(
+                : const Center(
                     child: CircularProgressIndicator(),
                   ),
           ),
@@ -373,8 +365,8 @@ class _ParahDetailListState extends State<ParahDetailList> {
     });
 
     if (scroll != null) {
-      Future.delayed(Duration(milliseconds: 100),(){
-        itemScrollController.jumpTo(index: scroll);
+      Future.delayed(const Duration(milliseconds: 100),(){
+        itemScrollController.jumpTo(index: scroll!);
       });
     }
 
@@ -385,7 +377,7 @@ class _ParahDetailListState extends State<ParahDetailList> {
 
   bool onBackPress() {
     preferences.setInt(Constants.SCROLL_POSITION, lastVisible);
-    preferences.setInt(Constants.ID, juzId);
+    preferences.setInt(Constants.ID, juzId!);
     preferences.setString(Constants.SET, Constants.PARAH);
 
     return true;
@@ -393,32 +385,32 @@ class _ParahDetailListState extends State<ParahDetailList> {
 
   Widget makeListView(BuildContext context, int index) {
     AyatModel ayatModel = aayatList[index];
-    String surah = QuranInfo.surahInfo[ayatModel.suratId].urduName;
-    IconData favourite = ayatModel.isFavourite ? Icons.star : Icons.star_border;
+    String? surah = QuranInfo.surahInfo[ayatModel.suratId!].urduName;
+    IconData favourite = ayatModel.isFavourite! ? Icons.star : Icons.star_border;
     String ayatNo = ayatModel.ayatNo == "0"
         ? 'سورۃ $surah'
-        : surah + " : " + ayatModel.ayatNo;
+        : surah! + " : " + ayatModel.ayatNo!;
 
     return Card(
         elevation: 4,
-        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               width: MediaQuery.of(context).size.width,
               child: Text(
-                ayatModel.ayat,
+                ayatModel.ayat!,
                 style: TextStyle(fontFamily: "NooreHuda", fontSize: arabicFont),
                 textDirection: TextDirection.rtl,
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               width: MediaQuery.of(context).size.width,
               child: Text(
-                ayatModel.translation,
+                ayatModel.translation!,
                 style: TextStyle(
                     fontFamily: "Jameel",
                     fontSize: translationFont,
@@ -439,7 +431,7 @@ class _ParahDetailListState extends State<ParahDetailList> {
                       padding: const EdgeInsets.only(top: 8, right: 16),
                       child: Text(
                         ayatNo,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: "Jameel",
                             fontWeight: FontWeight.w400,
                             fontSize: 18),
@@ -448,10 +440,8 @@ class _ParahDetailListState extends State<ParahDetailList> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
+
                         onPressed: () async {
                           if (favourite == Icons.star) {
                             setState(() {
@@ -475,36 +465,31 @@ class _ParahDetailListState extends State<ParahDetailList> {
                           }
                         },
                         icon: Icon(favourite),
-                        label: SizedBox.shrink()),
+                        label: const SizedBox.shrink()),
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
                         onPressed: () {
-                          Clipboard.setData(new ClipboardData(
-                              text: ayatModel.ayat +
+                          Clipboard.setData(ClipboardData(
+                              text: ayatModel.ayat! +
                                   "\n" +
-                                  ayatModel.translation));
+                                  ayatModel.translation!));
                           Utilities.showMessage(message: "Copied to Clipboard");
                         },
-                        icon: Icon(Icons.content_copy),
-                        label: SizedBox.shrink()),
+                        icon: const Icon(Icons.content_copy),
+                        label: const SizedBox.shrink()),
                   ),
                   Expanded(
                     flex: 1,
-                    child: FlatButton.icon(
-                        padding: EdgeInsets.all(0),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                    child: TextButton.icon(
+
                         onPressed: () {
                           Share.share(
-                              ayatModel.ayat + "\n" + ayatModel.translation);
+                              ayatModel.ayat! + "\n" + ayatModel.translation!);
                         },
-                        icon: Icon(Icons.share),
-                        label: SizedBox.shrink()),
+                        icon: const Icon(Icons.share),
+                        label: const SizedBox.shrink()),
                   ),
                 ],
               ),

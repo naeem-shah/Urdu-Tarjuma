@@ -17,7 +17,7 @@ void main() async {
     builder: (context, child) {
       return Directionality(
         textDirection: TextDirection.rtl,
-        child: child,
+        child: child!,
       );
     },
     home: HomePage(),
